@@ -1,0 +1,251 @@
+/**
+ * Copyright 2011 CaneData.org
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.canedata.core.util;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.util.Date;
+
+/**
+ * 
+ * @author Yat-ton
+ * @version 1.00.000 2011-4-27 01:15:34
+ */
+public class ByteUtil {
+	public static byte[] objectToByte(Object target) {
+		try {
+			ByteArrayOutputStream bo = new ByteArrayOutputStream();
+			ObjectOutputStream oo = new ObjectOutputStream(bo);
+			oo.writeObject(target);
+			oo.flush();
+
+			byte[] rlt = bo.toByteArray();
+			bo.close();
+
+			return rlt;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static ByteBuffer objectToByteBuffer(Object target) {
+		return ByteBuffer.wrap(objectToByte(target));
+	}
+
+	public static Object byteToObject(byte[] source) {
+		try {
+			ByteArrayInputStream bai = new ByteArrayInputStream(source);
+			ObjectInputStream bis = new ObjectInputStream(bai);
+
+			return bis.readObject();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Object byteToObject(ByteBuffer source) {
+		return byteToObject(source.array());
+	}
+
+	public static ByteBuffer toByteBuffer(Object val) {
+		ByteBuffer buffer = null;
+
+		try {
+			if (val instanceof Byte) {
+				buffer = ByteBuffer.allocate(Byte.SIZE);
+
+				buffer.put(0, (Byte) val);
+
+				return buffer;
+			}
+
+			if (val instanceof byte[])
+				return ByteBuffer.wrap((byte[]) val);
+
+			if (val instanceof ByteBuffer)
+				return (ByteBuffer) val;
+
+			if (val instanceof Character) {
+				buffer = ByteBuffer.allocate(Character.SIZE / Byte.SIZE);
+
+				buffer.putChar(0, (Character) val);
+
+				return buffer;
+			}
+
+			if (val instanceof Short) {
+				buffer = ByteBuffer.allocate(Short.SIZE / Byte.SIZE);
+
+				buffer.putShort(0, (Short) val);
+
+				return buffer;
+			}
+
+			if (val instanceof Integer) {
+				buffer = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
+
+				buffer.putInt(0, ((Integer) val).intValue());
+
+				return buffer;
+			}
+
+			if (val instanceof Boolean) {
+				byte[] v = new byte[1];
+				if ((Boolean) val)
+					v[0] = 1;
+				else
+					v[0] = 0;
+
+				return ByteBuffer.wrap(v);
+			}
+
+			if (val instanceof Double) {
+				buffer = ByteBuffer.allocate(Double.SIZE / Byte.SIZE);
+
+				buffer.putDouble(0, (Double) val);
+
+				return buffer;
+			}
+
+			if (val instanceof Float) {
+				buffer = ByteBuffer.allocate(Float.SIZE / Byte.SIZE);
+
+				buffer.putFloat(0, (Float) val);
+
+				return buffer;
+			}
+
+			if (val instanceof Long) {
+				buffer = ByteBuffer.allocate(Long.SIZE / Byte.SIZE);
+
+				buffer.putLong(0, (Long) val);
+
+				return buffer;
+			}
+
+			if (val instanceof String) {
+				try {
+					return ByteBuffer.wrap(((String) val).getBytes("UTF-8"));
+				} catch (UnsupportedEncodingException e) {
+					throw new RuntimeException(e);
+				}
+			}
+			
+			if(val instanceof Date){
+				buffer = ByteBuffer.allocate(Long.SIZE / Byte.SIZE);
+
+				buffer.putLong(0, ((Date)val).getTime());
+
+				return buffer;
+			}
+
+			return objectToByteBuffer(val);
+
+		} finally {
+//			if (null != buffer)
+//				buffer.flip();
+		}
+
+	}
+
+	public static byte[] toByte(ByteBuffer val) {
+		return val.array();
+	}
+
+	public static byte[] toByte(Object val) {
+		return toByteBuffer(val).array();
+	}
+
+	public static byte[] sliceToByte(ByteBuffer val, int offset, int length) {
+		byte[] rlt = new byte[length];
+		val.get(rlt, offset, length);
+
+		return rlt;
+	}
+
+	public static char getChar(Object source) {
+		return toByteBuffer(source).asCharBuffer().get();
+	}
+
+	public static int getInt(Object source) {
+		return toByteBuffer(source).getInt();
+	}
+
+	public static boolean getBoolean(Object source) {
+		if (source == null)
+			return false;
+		
+		if(source instanceof Boolean)
+			return ((Boolean)source).booleanValue();
+		
+		if(source instanceof Number)
+			return ((Number)source).intValue() > 0;
+			
+		if(source instanceof String)
+				return Boolean.valueOf(source.toString()).booleanValue();
+		
+		byte[] v = toByteBuffer(source).array();
+		if (v.length == 1)
+			return v[0] == 1;
+
+		if (v.length > 1)
+			try {
+				return Boolean.valueOf(new String(v, "UTF-8")).booleanValue();
+			} catch (UnsupportedEncodingException e) {
+			}
+
+		return false;
+	}
+
+	public static double getDouble(Object source) {
+		return toByteBuffer(source).getDouble();
+	}
+
+	public static float getFloat(Object source) {
+		return toByteBuffer(source).getFloat();
+	}
+
+	public static byte getByte(Object source) {
+		return toByteBuffer(source).get();
+	}
+
+	public static byte[] getBytes(Object source) {
+		return toByteBuffer(source).array();
+	}
+
+	public static String getString(Object source) {
+		try {
+			return new String(toByteBuffer(source).array(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static long getLong(Object source) {
+		return toByteBuffer(source).getLong();
+	}
+
+	public static short getShort(Object source) {
+		return toByteBuffer(source).getShort();
+	}
+}
