@@ -39,10 +39,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 	.getLogger(AbstractFields.class);
 	
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#get(java.lang.String)
-	 */
-	@SuppressWarnings("unchecked")
 	public <T> T get(String field) {
 		if(null == getField(field))
 			return null;
@@ -50,16 +46,10 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return (T) getField(field).get();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getChar(java.lang.String)
-	 */
 	public char getChar(String field) {
 		return ByteUtil.getChar(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getInt(java.lang.String)
-	 */
 	public int getInt(String field) {
 		if(null == getField(field))
 			return 0;
@@ -67,9 +57,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getInt(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getBoolean(java.lang.String)
-	 */
 	public boolean getBoolean(String field) {
 		if(null == getField(field))
 			return false;
@@ -77,9 +64,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getBoolean(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getDouble(java.lang.String)
-	 */
 	public double getDouble(String field) {
 		if(null == getField(field))
 			return 0;
@@ -87,9 +71,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getDouble(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getFloat(java.lang.String)
-	 */
 	public float getFloat(String field) {
 		if(null == getField(field))
 			return 0.0f;
@@ -97,9 +78,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getFloat(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getByte(java.lang.String)
-	 */
 	public byte getByte(String field) {
 		if(null == getField(field))
 			return 0;
@@ -107,9 +85,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getByte(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getBytes(java.lang.String)
-	 */
 	public byte[] getBytes(String field) {
 		if(null == getField(field))
 			return null;
@@ -117,9 +92,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getBytes(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getString(java.lang.String)
-	 */
 	public String getString(String field) {
 		if(null == getField(field))
 			return null;
@@ -127,9 +99,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getString(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getLong(java.lang.String)
-	 */
 	public long getLong(String field) {
 		if(null == getField(field))
 			return 0;
@@ -137,9 +106,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getLong(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getShort(java.lang.String)
-	 */
 	public short getShort(String field) {
 		if(null == getField(field))
 			return 0;
@@ -147,9 +113,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return ByteUtil.getShort(get(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getDate(java.lang.String)
-	 */
 	public Date getDate(String field) {
 		if(null == getField(field))
 			return null;
@@ -161,9 +124,6 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return new Date(ByteUtil.getLong(get(field)));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getInputStream(java.lang.String)
-	 */
 	public InputStream getInputStream(String field) {
 		if(null == getField(field))
 			return null;
@@ -171,16 +131,10 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 		return new ByteArrayInputStream(ByteUtil.getBytes(get(field)));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getReader(java.lang.String)
-	 */
 	public Reader getReader(String field) {
 		return new InputStreamReader(getInputStream(field));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.field.Fields#getChannel(java.lang.String)
-	 */
 	public ReadableByteChannel getChannel(String field) {
 		return Channels.newChannel(getInputStream(field));
 	}

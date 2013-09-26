@@ -35,29 +35,14 @@ public class StringCacheableWrapped implements Cacheable {
 		this.content = content;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.cache.Cacheable#getKey()
-	 */
 	public String getKey() {
 		return key;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.cache.Cacheable#isRestored()
-	 */
 	public boolean isRestored() {
 		return isRestored;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.cache.Cacheable#getCacheTime()
-	 */
 	public long getCacheTime() {
 		return cacheTime;
 	}

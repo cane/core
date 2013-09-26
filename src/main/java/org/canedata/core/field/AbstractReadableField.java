@@ -43,128 +43,58 @@ public abstract class AbstractReadableField extends Cacheable.Adapter implements
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getChar()
-	 */
 	public char getChar() {
 		return getFields().getChar(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getInt()
-	 */
 	public int getInt() {
 		return getFields().getInt(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getBoolean()
-	 */
 	public boolean getBoolean() {
 		return getFields().getBoolean(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getDouble()
-	 */
 	public double getDouble() {
 		return getFields().getDouble(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getFloat()
-	 */
 	public float getFloat() {
 		return getFields().getFloat(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getByte()
-	 */
 	public byte getByte() {
 		return getFields().getByte(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getBytes()
-	 */
 	public byte[] getBytes() {
 		return getFields().getBytes(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getString()
-	 */
 	public String getString() {
 		return getFields().getString(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getLong()
-	 */
 	public long getLong() {
 		return getFields().getLong(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getShort()
-	 */
 	public short getShort() {
 		return getFields().getShort(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getDate()
-	 */
 	public Date getDate() {
 		return getFields().getDate(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getInputStream()
-	 */
 	public InputStream getInputStream() {
 		return getFields().getInputStream(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getReader()
-	 */
 	public Reader getReader() {
 		return getFields().getReader(getName());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.ReadableField#getChannel()
-	 */
 	public ReadableByteChannel getChannel() {
 		return getFields().getChannel(getName());
 	}
