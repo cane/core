@@ -64,11 +64,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(java.lang.Object)
-	 */
 	public Entity set(Object val) {
 		value = val;
 		
@@ -77,11 +72,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(char)
-	 */
 	public Entity set(char val) {
 		value = val;
 		
@@ -90,11 +80,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(java.lang.String)
-	 */
 	public Entity set(String val) {
 		value = val;
 		
@@ -103,11 +88,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(int)
-	 */
 	public Entity set(int val) {
 		value = val;
 		
@@ -116,11 +96,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(double)
-	 */
 	public Entity set(double val) {
 		value = val;
 		
@@ -129,11 +104,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(float)
-	 */
 	public Entity set(float val) {
 		value = val;
 		
@@ -142,11 +112,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(boolean)
-	 */
 	public Entity set(boolean val) {
 		value = val;
 		
@@ -155,11 +120,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(byte)
-	 */
 	public Entity set(byte val) {
 		value = val;
 		
@@ -168,11 +128,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(byte[])
-	 */
 	public Entity set(byte[] vals) {
 		value = vals;
 		
@@ -181,11 +136,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(long)
-	 */
 	public Entity set(long val) {
 		value = val;
 		
@@ -194,11 +144,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#set(short)
-	 */
 	public Entity set(short val) {
 		value = val;
 		
@@ -207,11 +152,6 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return getEntity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#getOutputStream()
-	 */
 	public OutputStream getOutputStream() {
 		OutputStream out = new ByteArrayOutputStream() {
 			boolean hasFlashed = false;
@@ -236,20 +176,10 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 		return out;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#getWriter()
-	 */
 	public Writer getWriter() {
 		return new OutputStreamWriter(getOutputStream());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.jlue.cane.field.WritableField#getChannel()
-	 */
 	public WritableByteChannel getChannel() {
 		return Channels.newChannel(getOutputStream());
 	}

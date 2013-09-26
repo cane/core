@@ -51,36 +51,24 @@ public abstract class AbstractExpression implements ExpressionA {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.expression.shield.ExpressionC#and(org.jlue.cane.expression.Expression)
-	 */
 	public ExpressionA and(Expression expr) {
 		getIntent().step(Operator.AND_EPR, null, expr);
 		
 		return this;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.expression.shield.ExpressionC#or(org.jlue.cane.expression.Expression)
-	 */
 	public ExpressionA or(Expression expr) {
 		getIntent().step(Operator.OR_EPR, null, expr);
 		
 		return this;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.expression.shield.ExpressionC#and()
-	 */
 	public ExpressionB and() {
 		getIntent().step(Operator.AND, null);
 		
 		return getExpressionB();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jlue.cane.expression.shield.ExpressionC#or()
-	 */
 	public ExpressionB or() {
 		getIntent().step(Operator.OR, null);
 		
