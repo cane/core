@@ -15,6 +15,12 @@
  */
 package org.canedata.core.field;
 
+import org.canedata.cache.Cacheable;
+import org.canedata.core.logging.LoggerFactory;
+import org.canedata.core.util.ByteUtil;
+import org.canedata.field.Fields;
+import org.canedata.logging.Logger;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,12 +28,6 @@ import java.io.Reader;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Date;
-
-import org.canedata.cache.Cacheable;
-import org.canedata.core.logging.LoggerFactory;
-import org.canedata.core.util.ByteUtil;
-import org.canedata.field.Fields;
-import org.canedata.logging.Logger;
 
 /**
  * 
@@ -38,58 +38,32 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 	protected static final Logger logger = LoggerFactory
 	.getLogger(AbstractFields.class);
 	
-
-	public <T> T get(String field) {
-		if(null == getField(field))
-			return null;
-		
-		return (T) getField(field).get();
-	}
-
 	public char getChar(String field) {
-		return ByteUtil.getChar(get(field));
+		return getField(field).getChar();
 	}
 
 	public int getInt(String field) {
-		if(null == getField(field))
-			return 0;
-		
-		return ByteUtil.getInt(get(field));
+		return getField(field).getInt();
 	}
 
 	public boolean getBoolean(String field) {
-		if(null == getField(field))
-			return false;
-		
-		return ByteUtil.getBoolean(get(field));
+		return getField(field).getBoolean();
 	}
 
 	public double getDouble(String field) {
-		if(null == getField(field))
-			return 0;
-		
-		return ByteUtil.getDouble(get(field));
+		return getField(field).getDouble();
 	}
 
 	public float getFloat(String field) {
-		if(null == getField(field))
-			return 0.0f;
-		
-		return ByteUtil.getFloat(get(field));
+		return getField(field).getFloat();
 	}
 
 	public byte getByte(String field) {
-		if(null == getField(field))
-			return 0;
-		
-		return ByteUtil.getByte(get(field));
+		return getField(field).getByte();
 	}
 
 	public byte[] getBytes(String field) {
-		if(null == getField(field))
-			return null;
-		
-		return ByteUtil.getBytes(get(field));
+		return getField(field).getBytes();
 	}
 
 	public String getString(String field) {
@@ -100,43 +74,27 @@ public abstract class AbstractFields extends Cacheable.Adapter implements Fields
 	}
 
 	public long getLong(String field) {
-		if(null == getField(field))
-			return 0;
-		
-		return ByteUtil.getLong(get(field));
+		return getField(field).getLong();
 	}
 
 	public short getShort(String field) {
-		if(null == getField(field))
-			return 0;
-		
-		return ByteUtil.getShort(get(field));
+		return getField(field).getShort();
 	}
 
 	public Date getDate(String field) {
-		if(null == getField(field))
-			return null;
-		
-		Object t = get(field);
-		if(t instanceof Date)
-			return (Date)t;
-		
-		return new Date(ByteUtil.getLong(get(field)));
+		return getField(field).getDate();
 	}
 
 	public InputStream getInputStream(String field) {
-		if(null == getField(field))
-			return null;
-		
-		return new ByteArrayInputStream(ByteUtil.getBytes(get(field)));
+		return getField(field).getInputStream();
 	}
 
 	public Reader getReader(String field) {
-		return new InputStreamReader(getInputStream(field));
+		return getField(field).getReader();
 	}
 
 	public ReadableByteChannel getChannel(String field) {
-		return Channels.newChannel(getInputStream(field));
+		return getField(field).getChannel();
 	}
 
 }

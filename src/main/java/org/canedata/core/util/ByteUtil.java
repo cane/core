@@ -162,8 +162,8 @@ public class ByteUtil {
 			return objectToByteBuffer(val);
 
 		} finally {
-//			if (null != buffer)
-//				buffer.flip();
+			if (null != buffer)
+				buffer.flip();
 		}
 
 	}
@@ -184,11 +184,49 @@ public class ByteUtil {
 	}
 
 	public static char getChar(Object source) {
-		return toByteBuffer(source).asCharBuffer().get();
+        if(source instanceof Character)
+            return ((Character)source).charValue();
+
+        if(source instanceof Byte)
+            return (char)((Byte)source).intValue();
+
+        if(source instanceof Number)
+            return (char)((Number)source).intValue();
+
+        if(source instanceof CharSequence)
+            return ((CharSequence)source).charAt(0);
+
+		return toByteBuffer(source).getChar();
 	}
 
 	public static int getInt(Object source) {
-		return toByteBuffer(source).getInt();
+        if ( source instanceof Number )
+            return ((Number)source).intValue();
+
+        if ( source instanceof Boolean )
+            return ((Boolean)source) ? 1 : 0;
+
+        if(source instanceof String && isNumber((String)source))
+                return new Double((String)source).intValue();
+
+        int l = Integer.SIZE/Byte.SIZE;
+
+        ByteBuffer buf = ByteBuffer.allocate(l);
+        byte[] b = toByte(source);
+        int pos = l - b.length;
+
+        //fill
+        for(int i =0;i<=pos;i ++){
+            buf.put(i, (byte)0);
+        }
+
+        buf.position(pos);
+        buf.put(b);
+        buf.flip();
+        int rlt = buf.getInt();
+        buf.clear();
+
+		return rlt;
 	}
 
 	public static boolean getBoolean(Object source) {
@@ -202,7 +240,7 @@ public class ByteUtil {
 			return ((Number)source).intValue() > 0;
 			
 		if(source instanceof String)
-				return Boolean.valueOf(source.toString()).booleanValue();
+				return Boolean.valueOf((String)source).booleanValue();
 		
 		byte[] v = toByteBuffer(source).array();
 		if (v.length == 1)
@@ -218,15 +256,69 @@ public class ByteUtil {
 	}
 
 	public static double getDouble(Object source) {
-		return toByteBuffer(source).getDouble();
+        if ( source instanceof Number )
+            return ((Number)source).doubleValue();
+
+        if ( source instanceof Boolean )
+            return ((Boolean)source) ? 1 : 0;
+
+        if(source instanceof String && isNumber((String)source))
+            return new Double((String)source).doubleValue();
+
+        int l = Double.SIZE/Byte.SIZE;
+
+        ByteBuffer buf = ByteBuffer.allocate(l);
+        byte[] b = toByte(source);
+        int pos = l - b.length;
+        //fill
+        for(int i =0;i<=pos;i ++){
+            buf.put(i, (byte)0);
+        }
+
+        buf.position(pos);
+        buf.flip();
+        double rlt = buf.getDouble();
+        buf.clear();
+
+        return rlt;
 	}
 
 	public static float getFloat(Object source) {
-		return toByteBuffer(source).getFloat();
+        if ( source instanceof Number )
+            return ((Number)source).floatValue();
+
+        if ( source instanceof Boolean )
+            return ((Boolean)source) ? 1 : 0;
+
+        if(source instanceof String && isNumber((String)source))
+            return new Double((String)source).floatValue();
+
+        int l = Float.SIZE/Byte.SIZE;
+
+        ByteBuffer buf = ByteBuffer.allocate(l);
+        byte[] b = toByte(source);
+        int pos = l - b.length;
+        //fill
+        for(int i =0;i<=pos;i ++){
+            buf.put(i, (byte)0);
+        }
+
+        buf.position(pos);
+        buf.flip();
+        float rlt = buf.getFloat();
+        buf.clear();
+
+		return rlt;
 	}
 
 	public static byte getByte(Object source) {
-		return toByteBuffer(source).get();
+        if(source instanceof Byte)
+            return (Byte)source;
+
+        if(source instanceof Number)
+            return ((Number)source).byteValue();
+
+        throw new IllegalArgumentException( "can't convert: " + source.getClass().getName() + " to byte" );
 	}
 
 	public static byte[] getBytes(Object source) {
@@ -234,18 +326,98 @@ public class ByteUtil {
 	}
 
 	public static String getString(Object source) {
+        if(null == source)
+            return null;
+
+        if(source instanceof byte[])
 		try {
-			return new String(toByteBuffer(source).array(), "UTF-8");
+			return new String((byte[])source, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
 		}
+
+        return String.valueOf(source);
 	}
 
 	public static long getLong(Object source) {
-		return toByteBuffer(source).getLong();
+        if ( source instanceof Number )
+            return ((Number)source).longValue();
+
+        if ( source instanceof Boolean )
+            return ((Boolean)source) ? 1 : 0;
+
+        if(source instanceof String && isNumber((String)source))
+            return new Double((String)source).longValue();
+
+        int l = Long.SIZE/Byte.SIZE;
+
+        ByteBuffer buf = ByteBuffer.allocate(l);
+        byte[] b = toByte(source);
+        int pos = l - b.length;
+        //fill
+        for(int i =0;i<=pos;i ++){
+            buf.put(i, (byte)0);
+        }
+
+        buf.position(pos);
+        buf.flip();
+        long rlt = buf.getLong();
+        buf.clear();
+
+		return rlt;
 	}
 
 	public static short getShort(Object source) {
-		return toByteBuffer(source).getShort();
+        if ( source instanceof Number )
+            return ((Number)source).shortValue();
+
+        if ( source instanceof Boolean )
+            return (short)(((Boolean)source) ? 1 : 0);
+
+        if(source instanceof String && isNumber((String)source))
+            return new Double((String)source).shortValue();
+
+        int l = Short.SIZE/Byte.SIZE;
+
+        ByteBuffer buf = ByteBuffer.allocate(l);
+        byte[] b = toByte(source);
+        int pos = l - b.length;
+        //fill
+        for(int i =0;i<=pos;i ++){
+            buf.put(i, (byte)0);
+        }
+
+        buf.position(pos);
+        buf.flip();
+        short rlt = buf.getShort();
+        buf.clear();
+
+        return rlt;
 	}
+
+    public static boolean isNumber(String s){
+        if(null == s)
+            return false;
+
+        boolean dumPoint = false;
+        for(char c : s.toCharArray()){
+            if(c == '.' && dumPoint)
+                return false;
+
+            if(c == '.')
+                dumPoint = true;
+
+            if(!Character.isDigit(c) && c != '.')
+                return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isFloat(String s){
+        if(null == s)
+            return false;
+
+        return s.indexOf('.') != -1;
+    }
 }

@@ -15,13 +15,18 @@
  */
 package org.canedata.core.field;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Date;
+import java.util.Objects;
 
 import org.canedata.cache.Cacheable;
 import org.canedata.core.logging.LoggerFactory;
+import org.canedata.core.util.ByteUtil;
 import org.canedata.field.Fields;
 import org.canedata.field.ReadableField;
 import org.canedata.logging.Logger;
@@ -35,7 +40,8 @@ import org.canedata.logging.Logger;
 public abstract class AbstractReadableField extends Cacheable.Adapter implements ReadableField {
 	protected static final Logger logger = LoggerFactory
 			.getLogger(AbstractReadableField.class);
-	
+
+    //navigate to the caller
 	protected abstract Fields getFields();
 	
 	
@@ -44,59 +50,66 @@ public abstract class AbstractReadableField extends Cacheable.Adapter implements
 	}
 
 	public char getChar() {
-		return getFields().getChar(getName());
+		return ByteUtil.getChar(get());
 	}
 
 	public int getInt() {
-		return getFields().getInt(getName());
+		return ByteUtil.getInt(get());
 	}
 
 	public boolean getBoolean() {
-		return getFields().getBoolean(getName());
+		return ByteUtil.getBoolean(get());
 	}
 
 	public double getDouble() {
-		return getFields().getDouble(getName());
+		return ByteUtil.getDouble(get());
 	}
 
 	public float getFloat() {
-		return getFields().getFloat(getName());
+		return ByteUtil.getFloat(get());
 	}
 
 	public byte getByte() {
-		return getFields().getByte(getName());
+		return ByteUtil.getByte(get());
 	}
 
 	public byte[] getBytes() {
-		return getFields().getBytes(getName());
+		return ByteUtil.getBytes(get());
 	}
 
 	public String getString() {
-		return getFields().getString(getName());
+		return ByteUtil.getString(get());
 	}
 
 	public long getLong() {
-		return getFields().getLong(getName());
+		return ByteUtil.getLong(get());
 	}
 
 	public short getShort() {
-		return getFields().getShort(getName());
+		return ByteUtil.getShort(get());
 	}
 
 	public Date getDate() {
-		return getFields().getDate(getName());
+        Object val = get();
+        if(null == val)
+            return null;
+
+        if(val instanceof Date)
+            return (Date)val;
+
+		return new Date(getLong());
 	}
 
 	public InputStream getInputStream() {
-		return getFields().getInputStream(getName());
+		return new ByteArrayInputStream(getBytes());
 	}
 
 	public Reader getReader() {
-		return getFields().getReader(getName());
+		return new InputStreamReader(getInputStream());
 	}
 
 	public ReadableByteChannel getChannel() {
-		return getFields().getChannel(getName());
+		return Channels.newChannel(getInputStream());
 	}
 
 }
