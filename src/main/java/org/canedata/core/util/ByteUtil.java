@@ -196,10 +196,34 @@ public class ByteUtil {
         if(source instanceof CharSequence)
             return ((CharSequence)source).charAt(0);
 
+        //--since 0.5.1 by yitao at 2019-04-27
+        if(source instanceof Boolean)
+        	return (Boolean)source?'1':'0';
+
 		return toByteBuffer(source).getChar();
 	}
 
+	private static ByteBuffer obj2buffer(int len, Object source){
+		ByteBuffer buf = ByteBuffer.allocate(len);
+		byte[] b = toByte(source);
+		int pos = b.length>=len?0:len - b.length;
+
+		//fill
+		for(int i =0;i<=pos;i++){
+			buf.put(i, (byte)0);
+		}
+
+		buf.position(pos);
+		buf.put(b, 0,len - pos);
+		buf.flip();
+
+		return buf;
+	}
+
 	public static int getInt(Object source) {
+		if(null == source)
+			return 0;
+
         if ( source instanceof Number )
             return ((Number)source).intValue();
 
@@ -211,18 +235,7 @@ public class ByteUtil {
 
         int l = Integer.SIZE/Byte.SIZE;
 
-        ByteBuffer buf = ByteBuffer.allocate(l);
-        byte[] b = toByte(source);
-        int pos = l - b.length;
-
-        //fill
-        for(int i =0;i<=pos;i ++){
-            buf.put(i, (byte)0);
-        }
-
-        buf.position(pos);
-        buf.put(b);
-        buf.flip();
+		ByteBuffer buf = obj2buffer(l, source);
         int rlt = buf.getInt();
         buf.clear();
 
@@ -256,6 +269,9 @@ public class ByteUtil {
 	}
 
 	public static double getDouble(Object source) {
+		if(null == source)
+			return 0;
+
         if ( source instanceof Number )
             return ((Number)source).doubleValue();
 
@@ -267,16 +283,7 @@ public class ByteUtil {
 
         int l = Double.SIZE/Byte.SIZE;
 
-        ByteBuffer buf = ByteBuffer.allocate(l);
-        byte[] b = toByte(source);
-        int pos = l - b.length;
-        //fill
-        for(int i =0;i<=pos;i ++){
-            buf.put(i, (byte)0);
-        }
-
-        buf.position(pos);
-        buf.flip();
+		ByteBuffer buf = obj2buffer(l, source);
         double rlt = buf.getDouble();
         buf.clear();
 
@@ -284,6 +291,9 @@ public class ByteUtil {
 	}
 
 	public static float getFloat(Object source) {
+		if(null == source)
+			return 0f;
+
         if ( source instanceof Number )
             return ((Number)source).floatValue();
 
@@ -295,16 +305,7 @@ public class ByteUtil {
 
         int l = Float.SIZE/Byte.SIZE;
 
-        ByteBuffer buf = ByteBuffer.allocate(l);
-        byte[] b = toByte(source);
-        int pos = l - b.length;
-        //fill
-        for(int i =0;i<=pos;i ++){
-            buf.put(i, (byte)0);
-        }
-
-        buf.position(pos);
-        buf.flip();
+		ByteBuffer buf = obj2buffer(l, source);
         float rlt = buf.getFloat();
         buf.clear();
 
@@ -317,6 +318,14 @@ public class ByteUtil {
 
         if(source instanceof Number)
             return ((Number)source).byteValue();
+
+        //--since 0.5.1 at 2019-04-27 by yitao
+        if(source instanceof Boolean)
+        	return ((Number)getInt(source)).byteValue();
+
+        if(source instanceof String && isNumber((String)source))
+        	return ((Number)getInt(source)).byteValue();
+        //--
 
         throw new IllegalArgumentException( "can't convert: " + source.getClass().getName() + " to byte" );
 	}
@@ -340,6 +349,9 @@ public class ByteUtil {
 	}
 
 	public static long getLong(Object source) {
+		if(null == source)
+			return 0;
+
         if ( source instanceof Number )
             return ((Number)source).longValue();
 
@@ -351,16 +363,7 @@ public class ByteUtil {
 
         int l = Long.SIZE/Byte.SIZE;
 
-        ByteBuffer buf = ByteBuffer.allocate(l);
-        byte[] b = toByte(source);
-        int pos = l - b.length;
-        //fill
-        for(int i =0;i<=pos;i ++){
-            buf.put(i, (byte)0);
-        }
-
-        buf.position(pos);
-        buf.flip();
+		ByteBuffer buf = obj2buffer(l, source);
         long rlt = buf.getLong();
         buf.clear();
 
@@ -368,6 +371,9 @@ public class ByteUtil {
 	}
 
 	public static short getShort(Object source) {
+		if(null == source)
+			return 0;
+
         if ( source instanceof Number )
             return ((Number)source).shortValue();
 
@@ -379,16 +385,7 @@ public class ByteUtil {
 
         int l = Short.SIZE/Byte.SIZE;
 
-        ByteBuffer buf = ByteBuffer.allocate(l);
-        byte[] b = toByte(source);
-        int pos = l - b.length;
-        //fill
-        for(int i =0;i<=pos;i ++){
-            buf.put(i, (byte)0);
-        }
-
-        buf.position(pos);
-        buf.flip();
+		ByteBuffer buf = obj2buffer(l, source);
         short rlt = buf.getShort();
         buf.clear();
 
@@ -400,14 +397,19 @@ public class ByteUtil {
             return false;
 
         boolean dumPoint = false;
-        for(char c : s.toCharArray()){
+        char[] chars = s.toCharArray();
+
+        for(int i = chars[0] == '-' || chars[0] == '+'?1:0; i < chars.length; i++){
+        	char c = chars[i];
             if(c == '.' && dumPoint)
                 return false;
 
-            if(c == '.')
-                dumPoint = true;
+            if(c == '.') {
+				dumPoint = true;
+				continue;
+			}
 
-            if(!Character.isDigit(c) && c != '.')
+            if(!Character.isDigit(c))
                 return false;
         }
 
@@ -415,9 +417,10 @@ public class ByteUtil {
     }
 
     public static boolean isFloat(String s){
-        if(null == s)
+        if(null == s || "".equals(s.trim()))
             return false;
 
-        return s.indexOf('.') != -1;
+        int i = s.indexOf('.');
+        return i != -1 && i == s.lastIndexOf(".");
     }
 }

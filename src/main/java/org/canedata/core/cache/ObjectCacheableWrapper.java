@@ -17,13 +17,15 @@ package org.canedata.core.cache;
 
 import org.canedata.cache.Cacheable;
 
+import java.io.Serializable;
+
 /**
  * Object wrapped to Cacheable.
  *
  * @author Yat-ton
  * @version 1.00.000 14-3-29
  */
-public abstract class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
+public abstract class ObjectCacheableWrapper<T> extends Cacheable.Adapter implements Serializable {
     protected T t = null;
 
     public ObjectCacheableWrapper<T> setTarget(T target){

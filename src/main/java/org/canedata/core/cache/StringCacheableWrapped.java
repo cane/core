@@ -17,13 +17,15 @@ package org.canedata.core.cache;
 
 import org.canedata.cache.Cacheable;
 
+import java.io.Serializable;
+
 /**
  * String wrapped to Cacheable.
  * 
  * @author Yat-ton
  * @version 1.00.000 Sep 4, 2010 11:05:47 PM
  */
-public class StringCacheableWrapped implements Cacheable {
+public class StringCacheableWrapped implements Cacheable, Serializable {
 	protected String key = null;
 	protected boolean isRestored = false;
 	protected long cacheTime = System.currentTimeMillis();

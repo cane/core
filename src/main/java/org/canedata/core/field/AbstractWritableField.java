@@ -45,9 +45,10 @@ public abstract class AbstractWritableField extends Cacheable.Adapter implements
 
 	/**
 	 * put value to entity.
-	 * 
-	 * @param value
-	 * @return
+	 *
+	 * @param field
+	 * @param value field value.
+	 * @return return the instance of WritableField.
 	 */
 	protected abstract AbstractWritableField put(String field, Object value);
 
