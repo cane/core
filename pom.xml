@@ -5,7 +5,7 @@
 	<groupId>org.canedata</groupId>
 	<artifactId>cane-core</artifactId>
     <name>Cane core</name>
-	<version>0.5.1</version>
+	<version>0.5.3</version>
 	<packaging>jar</packaging>
 
     <description>
@@ -60,11 +60,6 @@
 			<artifactId>cane-api</artifactId>
 			<version>0.5</version>
 		</dependency>
-        <dependency>
-            <groupId>org.canedata.module</groupId>
-            <artifactId>cane-module-ehcache</artifactId>
-            <version>0.5</version>
-        </dependency>
 	</dependencies>
 
     <properties>
