@@ -21,7 +21,7 @@ package org.canedata.core.util;
  * @version 1.00.000 2011-5-27
  */
 public class StringUtils {
-	final static char[] digits = {
+	public final static char[] digits = {
 		'0' , '1' , '2' , '3' , '4' , '5' ,
 		'6' , '7' , '8' , '9' , 'a' , 'b' ,
 		'c' , 'd' , 'e' , 'f' , 'g' , 'h' ,
@@ -40,6 +40,11 @@ public class StringUtils {
 		
 		return target.matches("\\s*");
 	}
+
+    public static boolean isNotBlank(String target){
+        return !isBlank(target);
+    }
+
 	//boolean isNumber
 	public static String random(int length) {
 		StringBuffer sb = new StringBuffer(length);
