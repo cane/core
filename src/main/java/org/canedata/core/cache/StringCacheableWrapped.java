@@ -16,6 +16,7 @@
 package org.canedata.core.cache;
 
 import org.canedata.cache.Cacheable;
+import org.canedata.core.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -25,7 +26,7 @@ import java.io.Serializable;
  * @author Yat-ton
  * @version 1.00.000 Sep 4, 2010 11:05:47 PM
  */
-public class StringCacheableWrapped implements Cacheable, Serializable {
+public class StringCacheableWrapped implements Cacheable {
 	protected String key = null;
 	protected boolean isRestored = false;
 	protected long cacheTime = System.currentTimeMillis();
@@ -70,5 +71,13 @@ public class StringCacheableWrapped implements Cacheable, Serializable {
 		isRestored = true;
 
 		return this;
+	}
+
+	public boolean isNull() {
+		return content == null;
+	}
+
+	public boolean isBlank() {
+		return StringUtils.isBlank(content);
 	}
 }
