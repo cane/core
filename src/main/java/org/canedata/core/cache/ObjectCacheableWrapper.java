@@ -25,17 +25,48 @@ import java.io.Serializable;
  * @author Yat-ton
  * @version 1.00.000 14-3-29
  */
-public abstract class ObjectCacheableWrapper<T> extends Cacheable.Adapter implements Serializable {
-    protected T t = null;
+public class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
+    protected T target = null;
+    protected String key = null;
 
-    public ObjectCacheableWrapper<T> setTarget(T target){
-        t = target;
+    public ObjectCacheableWrapper(){
+    }
+
+    public ObjectCacheableWrapper(String key, T t){
+        this.key = key;
+        this.target = t;
+    }
+
+    @Override
+    public Object getKey() {
+        return key;
+    }
+
+    public void setKey(Object key) {
+        this.key = key.toString();
+    }
+
+    public void setTarget(T target){
+        this.target = target;
+    }
+
+    public T getTarget(){
+        return target;
+    }
+
+    public ObjectCacheableWrapper<T> target(T target){
+        this.target = target;
 
         return this;
     }
 
-    public T getTarget(){
-        return t;
+    public ObjectCacheableWrapper<T> key(String k){
+        key = k;
+
+        return this;
     }
 
+    public boolean isNull() {
+        return null == target;
+    }
 }
