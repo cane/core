@@ -29,6 +29,10 @@ public class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
     protected T target = null;
     protected String key = null;
 
+    public static <T> ObjectCacheableWrapper<T> of(String key, T t) {
+        return new ObjectCacheableWrapper(key, t);
+    }
+
     public ObjectCacheableWrapper(){
     }
 

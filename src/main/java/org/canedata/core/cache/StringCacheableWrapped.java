@@ -32,6 +32,10 @@ public class StringCacheableWrapped implements Cacheable {
 	protected long cacheTime = System.currentTimeMillis();
 	protected String content = null;
 
+	public static StringCacheableWrapped of(String key, String content) {
+		return new StringCacheableWrapped(key, false, content);
+	}
+
 	public StringCacheableWrapped(String key, boolean restored, String content) {
 		this.key = key;
 		isRestored = restored;
