@@ -14,5 +14,7 @@ public class TestByteutil {
         assert ByteUtil.isNumber("+1");
         assert ByteUtil.isNumber("1");
         assert ByteUtil.isNumber("12345");
+
+
     }
 }

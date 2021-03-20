@@ -73,4 +73,14 @@ public class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
     public boolean isNull() {
         return null == target;
     }
+
+    @Override
+    public boolean isWrappedFor(Class<?> iface) {
+        return iface.isInstance(target);
+    }
+
+    @Override
+    public <T> T unwrap(Class<T> iface) {
+        return iface.cast(target);
+    }
 }

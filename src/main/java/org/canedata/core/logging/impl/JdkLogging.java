@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.canedata.logging.Logger;
 import org.canedata.logging.WrappedLoggerFactory;
+import org.canedata.module.Module;
 
 /**
  * Wrapped JDK Logging.
@@ -35,6 +36,13 @@ public class JdkLogging implements WrappedLoggerFactory {
 	private static final Map<String, Object> EXTRAS = new HashMap<String, Object>();
 	
 	private static JdkLogging instance;
+
+	@Override
+	public JdkLogging setExtra(String key, Object val) {
+		EXTRAS.put(key, val);
+
+		return this;
+	}
 
 	private JdkLogging() {
 		// java.util.logging.

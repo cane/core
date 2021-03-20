@@ -21,6 +21,7 @@ import org.canedata.core.intent.Intent;
 import org.canedata.core.intent.Step;
 import org.canedata.core.intent.Tracer;
 import org.canedata.core.logging.LoggerFactory;
+import org.canedata.entity.Entity;
 import org.canedata.exception.AnalyzeBehaviourException;
 import org.canedata.expression.Expression;
 import org.canedata.expression.Operator;
@@ -83,7 +84,7 @@ public abstract class AbstractExpression implements ExpressionA {
 
 				public Tracer trace(Step step)
 						throws AnalyzeBehaviourException {
-					logger.debug("Analyzing exprssion by toExprString, step is {0}, purpose is {1}, value is {2}.", step.getName(), step.getPurpose(), step.getScalar());
+					logger.debug("Analyzing exprssion by toExprString, step is {0}, purpose is {1}, value is {2}.", step.getName(), step.getPurpose(), Arrays.toString(step.getScalar()));
 					
 					switch (step.step()) {
 					case Operator.EQUALS:

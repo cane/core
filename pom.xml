@@ -5,7 +5,7 @@
 	<groupId>org.canedata</groupId>
 	<artifactId>cane-core</artifactId>
     <name>Cane core</name>
-	<version>0.5.3</version>
+	<version>0.6.beta</version>
 	<packaging>jar</packaging>
 
     <description>
@@ -42,10 +42,15 @@
             <name>Sonatype Nexus snapshot repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
-        <repository>
+        <!--repository>
             <id>maven</id>
             <name>Nexus Release Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository-->
+        <repository>
+            <id>dht</id>
+            <name>Nexus Release Repository</name>
+            <url>https://team.dht.ink/nexus/repository/dht/</url>
         </repository>
     </distributionManagement>
 
@@ -58,7 +63,7 @@
 		<dependency>
 			<groupId>org.canedata</groupId>
 			<artifactId>cane-api</artifactId>
-			<version>0.5</version>
+			<version>0.6.beta</version>
 		</dependency>
 	</dependencies>
 

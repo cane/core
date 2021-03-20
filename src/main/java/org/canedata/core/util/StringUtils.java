@@ -21,6 +21,7 @@ package org.canedata.core.util;
  * @version 1.00.000 2011-5-27
  */
 public class StringUtils {
+	@Deprecated
 	public final static char[] digits = {
 		'0' , '1' , '2' , '3' , '4' , '5' ,
 		'6' , '7' , '8' , '9' , 'a' , 'b' ,
@@ -34,7 +35,91 @@ public class StringUtils {
 		'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,
 		'Y' , 'Z'
 	    };
-	
+
+	public static final char[] DIGITS = {
+			'0' , '1' , '2' , '3' , '4' , '5' ,
+			'6' , '7' , '8' , '9'
+	};
+
+	public static final char[] CHAR_LOWERCASE = {
+			'a' , 'b' , 'c' , 'd' , 'e' , 'f' , 'g' , 'h' ,
+			'i' , 'j' , 'k' , 'l' , 'm' , 'n' , 'o' , 'p' ,
+			'q' , 'r' , 's' , 't' , 'u' , 'v' , 'w' , 'x' ,
+			'y' , 'z'
+	};
+
+	public static final char[] CHAR_UPPERCASE = {
+			'A' , 'B' , 'C' , 'D' , 'E' , 'F' ,
+			'G' , 'H' , 'I' , 'J' , 'K' , 'L' ,
+			'M' , 'N' , 'O' , 'P' , 'Q' , 'R' ,
+			'S' , 'T' , 'U' , 'V' , 'W' , 'X' ,
+			'Y' , 'Z'
+	};
+
+	/**
+	 * a-z, 0-9
+	 */
+	public static final char[] CHAR36 = {
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
+	};
+
+	/**
+	 * A-z, 0-9
+	 */
+	public static final char[] CHAR36_UPPERCASE = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	};
+
+	/**
+	 * A-Z, a-z, 0-9
+	 */
+	public static final char[] CHAR62 = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	};
+
+	/**
+	 * Contain CHAR62 and '-', '_'
+	 */
+	public static final char[] CHAR_URL = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_'
+	};
+
+	/**
+	 * Contain CHAR62 and '+', '/'
+	 */
+	public static final char[] CHAR64 = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/'
+	};
+
+	/**
+	 * 90 visible characters
+	 */
+	public static final char[] CHAR90 = {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+			'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+			'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+			'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', '-',
+			'_', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', ':',
+			';', ',', '.', '?', '/', '|', '=', '`', '{', '}', '[', ']'
+	};
+
 	public static boolean isBlank(String target){
 		if(null == target) return true;
 		

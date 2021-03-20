@@ -15,33 +15,40 @@
  */
 package org.canedata.core.intent;
 
+import java.text.MessageFormat;
+
 /**
  * 
  * @author Yat-ton
  * @version 1.00.000 2011-5-13
  */
 public interface Limiter {
-	public Limiter limit(int offset, int count);
-	public Limiter offset(int offset);
+	public Limiter limit(long offset, int count);
+	public Limiter offset(long offset);
 	public Limiter count(int count);
 	
-	public int offset();
+	public long offset();
 	public int count();
+	public boolean isLimit();
 	
 	public Limiter reset();
 	
 	public class Default implements Limiter{
-		int offset = -1;
+		long offset = 0;
 		int count = -1;
 		
-		public Default limit(int offset, int count){
+		public Default limit(long offset, int count){
 			this.offset = offset;
 			this.count = count;
 			
 			return this;
 		}
-		
-		public Limiter offset(int offset) {
+
+		public boolean isLimit(){
+			return offset >= 0 && count > 0;
+		}
+
+		public Limiter offset(long offset) {
 			this.offset = offset;
 			
 			return this;
@@ -53,7 +60,7 @@ public interface Limiter {
 			return this;
 		}
 
-		public int offset() {
+		public long offset() {
 			return offset;
 		}
 
@@ -62,10 +69,15 @@ public interface Limiter {
 		}
 		
 		public Default reset(){
-			offset = -1;
+			offset = 0;
 			count = -1;
 			
 			return this;
+		}
+
+		@Override
+		public String toString() {
+			return MessageFormat.format("Limiter: [{0}, {1}], isLimit: {2}", offset, count, isLimit());
 		}
 	}
 }

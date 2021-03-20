@@ -89,6 +89,7 @@ public abstract class AbstractReadableField extends Cacheable.Adapter implements
 		return ByteUtil.getShort(get());
 	}
 
+
 	public Date getDate() {
         Object val = get();
         if(null == val)
