@@ -84,14 +84,4 @@ public class StringCacheableWrapped implements Cacheable {
 	public boolean isBlank() {
 		return StringUtils.isBlank(content);
 	}
-
-	@Override
-	public boolean isWrappedFor(Class<?> iface) {
-		return iface.isInstance(content);
-	}
-
-	@Override
-	public <T> T unwrap(Class<T> iface) {
-		return iface.cast(content);
-	}
 }

@@ -15,6 +15,7 @@
  */
 package org.canedata.core.cache;
 
+import org.canedata.Wrapper;
 import org.canedata.cache.Cacheable;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ import java.io.Serializable;
  * @author Yat-ton
  * @version 1.00.000 14-3-29
  */
-public class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
+public class ObjectCacheableWrapper<T> extends Cacheable.Adapter implements Wrapper {
     protected T target = null;
     protected String key = null;
 
@@ -81,6 +82,6 @@ public class ObjectCacheableWrapper<T> extends Cacheable.Adapter {
 
     @Override
     public <T> T unwrap(Class<T> iface) {
-        return iface.cast(target);
+        return (T) target;//iface.cast(target);
     }
 }
